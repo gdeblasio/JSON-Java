@@ -1,11 +1,9 @@
 package jsonjava;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.Gson;
 
 public class JsonJava {
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) {
         String jsonString = 
                 "{ "
                 +   "\"firstName\": \"Albert\", "
@@ -20,16 +18,9 @@ public class JsonJava {
                 +   "   { \"home\": 928001122 } "
                 +   " ] "
                 + "}";
-
-        JSONParser parser = new JSONParser();
-        JSONObject jsonObj = (JSONObject) parser.parse(jsonString);
-        for (Object key : jsonObj.keySet()) {
-            String ageKey = (String) key;
-            if (ageKey.equals("age")) {
-                long age = (long) jsonObj.get("age");
-                System.out.println("La edad es: " + age);
-		      break;
-            }
-        }
+        Gson gson = new Gson();
+        Agenda agenda = gson.fromJson(jsonString, Agenda.class);
+        long age = agenda.getAge();
+        System.out.println("La edad es: " + age);
     }
 }
